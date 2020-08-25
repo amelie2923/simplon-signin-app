@@ -2,12 +2,14 @@ const fs = require('fs');
 const readline = require('readline');
 const axios = require('axios');
 
+const Sheets = require('../models/Sheets');
+
 let controller = {}
 
 controller.dataSheets = async (req, res, next) => {
-  let learner = [];
-  let date = [];
-  let former = [];
+  const learner = [];
+  const date = [];
+  const former = [];
 
   try {
     axios.get('https://spreadsheets.google.com/feeds/cells/1Z5A_I7_RQKOjAXyDgn9_scbLA7YVTYBAC1G64orWb-E/1/public/full?alt=json')
@@ -52,9 +54,6 @@ controller.dataSheets = async (req, res, next) => {
           message: 'Une erreur est survenue lors de l\'ajout des données dans la base'
       });
     }
-    console.log(learner)
-    console.log(date)
-    console.log(former)
 };
 
 module.exports = controller;
