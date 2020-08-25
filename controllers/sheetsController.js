@@ -2,29 +2,56 @@ const fs = require('fs');
 const readline = require('readline');
 const axios = require('axios');
 
-var controller = {}
+let controller = {}
 
-controller.getData = async (req, res) => {
+controller.dataSheets = async (req, res, next) => {
+  let learner = [];
+  let date = [];
+  let former = [];
+
   try {
-    const url = "https://spreadsheets.google.com/feeds/cells/1Z5A_I7_RQKOjAXyDgn9_scbLA7YVTYBAC1G64orWb-E/1/public/full?alt=json"
-    const response = await axios.get(url);
-    let getSheetsData = response.data.feed.entry;
+    axios.get('https://spreadsheets.google.com/feeds/cells/1Z5A_I7_RQKOjAXyDgn9_scbLA7YVTYBAC1G64orWb-E/1/public/full?alt=json')
+    .then(response => {
+      getSheetsData = response.data.feed.entry;
+      console.log(getSheetsData);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    //Enregistrer les données du Sheets dans des tableaux vides pour pouvoir réutiliser les données
+    getSheetsData.forEach(element => {
+      //Pour push uniquement les éléments sous la première ligne après "Etudiant"
+      if (element.gs$cell.col === '1' && element.gs$cell.inputValue != "Etudiant"){
+        learner.push(element.gs$cell.inputValue)
+      }
+      //Pour push uniquement les éléments sous la première ligne après "Date"
+      if(element.gs$cell.col === '2' && element.gs$cell.inputValue != "Date"){
+        date.push(element.gs$cell.inputValue)
+      }
+      if(element.gs$cell.col === '3' && element.gs$cell.inputValue != "Formateur"){
+        former.push(element.gs$cell.inputValue)
+      }
+    });
+  
+    const saveSheetsData = new Sheets({
+      learner: learner,
+      date: date,
+      former: former,
+    });
+  
+    await saveSheetsData.save();
 
-    var learner = [];
-    var date = [];
-    var former = [];
+    res.json({
+      success: true,
+      message: 'Les données ont bien été ajoutées à la base'
+    });
 
-    // getSheetsData.forEach(element => {
-      //Pour push uniquement les éléments sous la première ligne après "Apprenants"
-      // if (element.gs$cell.col === '1' && element.gs$cell.inputValue !="Apprenants"){
-      //     learner.push(element.gs$cell.inputValue)
-      // }
-    // })
-
-    console.log(getSheetsData);
   } catch (error) {
-    console.error(error);
-  }
-}
+      return res.json({
+          success: false,
+          message: 'Une erreur est survenue lors de l\'ajout des données dans la base'
+      });
+    }
+};
 
 module.exports = controller;
