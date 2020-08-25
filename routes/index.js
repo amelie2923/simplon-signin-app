@@ -7,6 +7,6 @@ const sheetsController = require('../controllers/sheetsController');
 //   res.render('index', { title: 'Express' });
 // });
 
-router.post('/data', sheetsController.dataSheets);
+router.get('/data', sheetsController.dataSheets);
 
 module.exports = router;
