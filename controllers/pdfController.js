@@ -1,10 +1,31 @@
 const fs = require('fs');
 const readline = require('readline');
+
+const PDFDocument = require('pdfkit');
+
 const axios = require('axios');
 
 const Sheets = require('../models/Sheets');
+const Template = require('../models/Template')
 
 let controller = {}
+
+controller.dashboard = async(req, res, next) => {
+  try {
+    const findTemplate = await Template.find();
+    const templateId = await Sheets.find().populate('templateId');
+
+    res.render('dashboard', {
+      title: 'Dashboard',
+      path: '/dashboard',
+      page: 'dashboard',
+      findTemplate: findTemplate,
+      templateId: templateId
+    });
+  } catch (error) {
+      return res.status(500).send('Error!');
+  }
+}
 
 controller.dataSheets = async (req, res, next) => {
   const learner = [];
@@ -15,7 +36,6 @@ controller.dataSheets = async (req, res, next) => {
     axios.get('https://spreadsheets.google.com/feeds/cells/1Z5A_I7_RQKOjAXyDgn9_scbLA7YVTYBAC1G64orWb-E/1/public/full?alt=json')
     .then(response => {
       getSheetsData = response.data.feed.entry;
-      // console.log(getSheetsData);
     })
     .catch(error => {
       console.log(error);
@@ -55,5 +75,17 @@ controller.dataSheets = async (req, res, next) => {
       });
     }
 };
+
+controller.createPdf = async (req, res, next) => {
+  //Créer un document PDF vide et l'enregiste
+  // const sheetsId = req.params.id;
+  // const sheets = Sheets;
+  const pdf = new PDFDocument({
+    size: 'A4',
+    layout: 'landscape',
+    margin: 50,
+    // autoFirstPage: false
+  });
+}
 
 module.exports = controller;

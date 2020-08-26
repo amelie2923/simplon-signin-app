@@ -3,14 +3,19 @@ const ObjectId = mongoose.Types.ObjectId;
 
 const SheetsSchema = mongoose.Schema({
     learner: {
-        type: Array
+      type: Array
     },
     date: {
-        type: Array
+      type: Array
     },
     former: {
-        type: Array
-    }
+      type: Array
+    },
+    templateId: {
+      type: ObjectId,
+      require: true, 
+      ref: 'templates'
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Sheets', SheetsSchema);

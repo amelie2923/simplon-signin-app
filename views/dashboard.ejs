@@ -1,0 +1,27 @@
+<% include ./includes/head %>
+<% include ./includes/header %>
+
+<!-- Ajouter les données du sheets à synchroniser avant la création du PDF -->
+<body>
+  <!-- <h1><%= title %></h1> -->
+  <main class="container-fluid">
+    <p class="text-center">Générer le template
+      <div class="card-body">
+        <h6 class="card-title text-center font-weight-bold text-center">Feuille émargement <br>
+          Date du .... au .....
+        </h6>
+        <div class="text-center">
+          <p class="card-text">Logo</p>
+            <p class="card-text">Entitled</p>
+            <p class="card-text">Organism</p>
+        </div>
+    </div>
+      <!--Enregistrer le template en base de données-->
+      <form class = "text-center" action="/generateTemplate" method="POST">
+        <button type="submit" class="btn btn-primary px-3 font-weight-bold" onclick="return confirm('Souhaitez-vous générer le template?');">Générer</button>
+      </form>
+    </p>
+  </main>
+</body>
+
+<% include ./includes/footer %>

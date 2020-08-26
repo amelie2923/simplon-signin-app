@@ -2,20 +2,20 @@ const mongoose = require('mongoose');
 
 const TemplateSchema = mongoose.Schema({
     name: {
-        type: String,
-        require: true
+      type: String,
+      require: true
     },
     entitled: {
-        type: String,
-        require: true
+      type: String,
+      require: true
     },
     organism: {
-        type: String,
-        require: true
+      type: String,
+      require: true
     },
     logo: {
-        type: String,
-        require: true
+      type: String,
+      require: true
     }
     //createdAt/updatedAt for the template
 }, { timestamps: true });

@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
   <body>
     <h1><%= title %></h1>
-    <p>Enregistrer les dernières données du Google Sheets dans la base de données: 
+    <p>Synchroniser les dernières données du Google Sheets et les enregistrer dans la base de données: 
       <form action="/data" method="POST">
         <button type="submit" class="btn btn-info px-3 font-weight-bold" onclick="return confirm('Souhaitez-vous sauvegarder les données les plus récentes?');">Enregistrer</button>
       </form>
     </p>
   </body>
-</html>
