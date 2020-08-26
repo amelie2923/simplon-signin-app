@@ -12,6 +12,6 @@ router.post('/data', pdfController.dataSheets);
 
 router.get('/dashboard', pdfController.dashboard);
 
-router.get('/createpdf/:id', pdfController.createPdf);
+router.get('/createpdf', pdfController.createPdf);
 
 module.exports = router;

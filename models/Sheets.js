@@ -11,11 +11,11 @@ const SheetsSchema = mongoose.Schema({
     former: {
       type: Array
     },
-    templateId: {
-      type: ObjectId,
-      require: true, 
-      ref: 'templates'
-  },
+  //   templateId: {
+  //     type: ObjectId,
+  //     require: true, 
+  //     ref: 'templates'
+  // },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Sheets', SheetsSchema);

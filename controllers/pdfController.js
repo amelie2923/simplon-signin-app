@@ -80,12 +80,30 @@ controller.createPdf = async (req, res, next) => {
   //Créer un document PDF vide et l'enregiste
   // const sheetsId = req.params.id;
   // const sheets = Sheets;
+
+  //Récupérer les données du sheets depuis la base
+
+  const learners = await Sheets.find({}).select('learner');
+  const dates = await Sheets.find({}).select('date');
+  const formers = await Sheets.find({}).select('former');
+
+  //Récupérer les données du template choisi (avec son id?)
+
   const pdf = new PDFDocument({
     size: 'A4',
     layout: 'landscape',
     margin: 50,
-    // autoFirstPage: false
   });
+
+  pdf
+  .text(`${learners}`)
+  .text(`${dates}`)
+  .text(`${formers}`)
+
+  pdf.pipe(fs.createWriteStream('sheets.pdf'));
+
+  pdf.end();
+  
 }
 
 module.exports = controller;
