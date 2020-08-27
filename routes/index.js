@@ -14,4 +14,8 @@ router.get('/dashboard', pdfController.dashboard);
 
 router.get('/createpdf', pdfController.createPdf);
 
+router.get('/template', pdfController.template);
+
+router.post('/createtemplate', pdfController.createTemplate);
+
 module.exports = router;
