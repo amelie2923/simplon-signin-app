@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 
 const SheetsSchema = mongoose.Schema({
+  templateId: {
+    type: ObjectId,
+    require: true, 
+    ref: 'templates'
+    },
     learner: {
       type: Array
     },
@@ -11,11 +16,6 @@ const SheetsSchema = mongoose.Schema({
     former: {
       type: Array
     },
-  //   templateId: {
-  //     type: ObjectId,
-  //     require: true, 
-  //     ref: 'templates'
-  // },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Sheets', SheetsSchema);

@@ -85,8 +85,8 @@ controller.createPdf = async (req, res, next) => {
   const learners = await Sheets.find({}).select('learner');
   const dates = await Sheets.find({}).select('date');
   const formers = await Sheets.find({}).select('former');
-
   //Récupérer les données du template choisi (avec son id?)
+  const templateId = await Sheets.find({}).select('templateId');
 
   const pdf = new PDFDocument({
     size: 'A4',
@@ -94,16 +94,10 @@ controller.createPdf = async (req, res, next) => {
     margin: 50,
   });
 
-  //parcourir learner pour afficher les noms 1 à 1
-  // let i;
-  // for(i=0; i < learners.length; i++){
-
-  // }
-
-  // pdf
-  // .text(`${learners}`)
-  // .text(`${dates}`)
-  // .text(`${formers}`)
+  learners.forEach(element => pdf.text(element.learner));
+  dates.forEach(element => pdf.text(element.date));
+  formers.forEach(element => pdf.text(element.former));
+  templateId.forEach(element => pdf.text(element.templateId));
 
   //enregistre le pdf à la racine du projet
   pdf.pipe(fs.createWriteStream('sheets.pdf'));
@@ -121,6 +115,8 @@ controller.template = async (req, res, next) => {
 }
 
 controller.createTemplate = async (req, res, next) => {
+
+  //to do : validation des données du formulaire avec express validator
 
   try {
     const template = new Template({
@@ -145,5 +141,7 @@ controller.createTemplate = async (req, res, next) => {
   }
 
 }
+
+//todo : list, edit and remove template controller
 
 module.exports = controller;
