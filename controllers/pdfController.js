@@ -122,28 +122,12 @@ controller.template = async (req, res, next) => {
 
 controller.createTemplate = async (req, res, next) => {
 
-  //Récupérer les données de la base de données pour Template
-  // const name = await Template.find({}).select('name');
-  // console.log(name)
-  // const entitled = await Template.find().select('entitled');
-  // const organism = await Template.find().select('organism');
-  // const logo = await Template.find().select('logo');
-
-  const { name, entitled, organism } = req.body;
-  const logo = req.file;
-
-//   res.render('createtemplate', {
-//     title: 'Créer un template',
-//     path: '/createtemplate',
-//     page: "createtemplate",
-// });
-
   try {
     const template = new Template({
-        name: name,
-        entitled: entitled,
-        organism: organism,
-        logo: logo
+        name: req.body.name,
+        entitled: req.body.entitled,
+        organism: req.body.organism,
+        logo: req.body.logo
     });
 
     await template.save();

@@ -4,22 +4,22 @@
 <body>
   <h1><%= title %></h1>
 <main class="container">
-  <form id="createTemplate" action="/createtemplate" method="POST" enctype="multipart/form-data">
+  <form id="createTemplate" action="/createtemplate" method="POST">
     <div class="form-group">
       <label for="name">Nom du template</label>
-      <input required type="text" class="form-control" id="name" aria-describedby="name">
+      <input required type="text" class="form-control" name="name" id="name">
     </div>
     <div class="form-group">
       <label for="entitled">Intitulé</label>
-      <input required type="entitled" class="form-control" id="entitled" aria-describedby="entitled">
+      <input required type="entitled" class="form-control" name="entitled" id="entitled">
     </div>
     <div class="form-group">
       <label for="organism">Organisme de formation</label>
-      <input required type="organism" class="form-control" id="organisme" aria-describedby="organism">
+      <input required type="organism" class="form-control" name="organism" id="organism">
     </div>
     <div class="form-group">
       <label for="image">Logo</label>
-      <input required type="file" class="form-control" id="logo" aria-describedby="logo">
+      <input required type="file" class="form-control" name="logo" id="logo" aria-describedby="logo">
     </div>
         <button type="submit" class="btn btn-primary px-3 font-weight-bold" onclick="return confirm('Souhaitez-vous générer le template?');">Créer</button>
     </form>
