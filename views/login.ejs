@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./includes/head %>
+</head>
+<body class="container">
+
+<main>
+  <div class="jumbotron">
+    <form action="/signin" method="POST" class="form">
+      <div class="form-group">
+      	<label>Email</label>
+      		<input type="mail" name="email" class="form-control">
+      	</div>
+		  <div class="form-group">
+      	<label>Mot de passe</label>
+      		<input type="password" name="password" class="form-control">
+      </div>
+      <div class="col-sm-12 text-center mt-5">
+      	<input type="submit" value="Se connecter" class="btn btn-primary">
+      </div>
+    </form>
+    <div class="col-sm-12 text-center mt-5">
+      <a href="/register">S'inscrire</a>
+    </div>
+    </div>
+</main>
+
+<footer>
+    <% include ./includes/footer %>
+</footer>
+
+</body>
+</html>

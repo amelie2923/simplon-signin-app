@@ -13,7 +13,7 @@ let controller = {}
 controller.dashboard = async(req, res, next) => {
   try {
     const findTemplate = await Template.find();
-    // const templateId = await Sheets.find().populate('templateId');
+    const templateId = await Sheets.find().populate('templateId');
     // const name = await Template.find().select('name');
 
     res.render('dashboard', {
@@ -21,7 +21,7 @@ controller.dashboard = async(req, res, next) => {
       path: '/dashboard',
       page: 'dashboard',
       findTemplate: findTemplate,
-      // templateId: templateId
+      templateId: templateId
     });
   } catch (error) {
       return res.status(500).send('Error!');
@@ -79,7 +79,7 @@ controller.dataSheets = async (req, res, next) => {
 
 controller.createPdf = async (req, res, next) => {
   //Créer un document PDF vide et l'enregiste
-  
+
   //Récupérer les données du sheets depuis la base
 
   const learners = await Sheets.find({}).select('learner');
@@ -96,14 +96,13 @@ controller.createPdf = async (req, res, next) => {
 
   learners.forEach(element => pdf.text(element.learner));
   dates.forEach(element => pdf.text(element.date));
+  //Formateur 1 par défaut
   formers.forEach(element => pdf.text(element.former));
-  templateId.forEach(element => pdf.text(element.templateId));
-
+  // templateId.forEach(element => pdf.text(element.templateId));
   //enregistre le pdf à la racine du projet
   pdf.pipe(fs.createWriteStream('sheets.pdf'));
 
   pdf.end();
-  
 }
 
 controller.template = async (req, res, next) => {
