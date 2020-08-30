@@ -4,8 +4,8 @@ const ObjectId = mongoose.Types.ObjectId;
 const SheetsSchema = mongoose.Schema({
   templateId: {
     type: ObjectId,
-    require: true, 
-    ref: 'templates'
+    require: true,
+    ref: 'Template'
     },
     learner: {
       type: Array

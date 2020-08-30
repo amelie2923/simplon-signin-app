@@ -23,6 +23,20 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+/**
+ * @MiddleWare
+ * UTILISATEUR CONNECTÉ
+ */
+// app.use('/*', function (req, res, next) {
+//   console.log(req.session)
+//   res.locals.currentUser = {}
+//   if (req.session.user) {
+//     res.locals.currentUser.login = req.session.user.email // email de l'utilisateur connecté (dans le menu) accessible pour toutes les vues
+//     res.locals.currentUser.id = req.session.user._id
+//   }
+//   next()
+// })
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
