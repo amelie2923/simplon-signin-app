@@ -91,9 +91,6 @@ controller.createPdf = async (req, res, next) => {
   const learners = await Sheets.find({}).select('learner');
   const dates = await Sheets.find({}).select('date');
   const formers = await Sheets.find({}).select('former');
-<<<<<<< HEAD
-  
-=======
   const templateId  = req.body.templateIdGenerate;
 
   const findTemplate = await Template.findOne({
@@ -102,7 +99,6 @@ controller.createPdf = async (req, res, next) => {
   
   console.log(findTemplate)
 
->>>>>>> 008fd159f9f01951c85965b0274d7774bc3b2382
     //Créer le pdf
     const pdf = new PDFDocument({
       size: 'A4',
