@@ -1,5 +1,9 @@
-<% include ./includes/head %>
-<% include ./includes/header %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./includes/head %>
+</head>
+ <% include ./includes/header %>
   <body>
       <form id="createTemplate" action="/createtemplate" method="POST">
         <div class="form-group">
@@ -21,5 +25,10 @@
             <button type="submit" class="btn btn-primary px-3 font-weight-bold" onclick="return confirm('Souhaitez-vous générer le template?');">Créer</button>
         </form>
     </p>
-  </body>
-<% include ./includes/footer %>
+
+<footer>
+    <% include ./includes/footer %>
+</footer>
+
+</body>
+</html>
