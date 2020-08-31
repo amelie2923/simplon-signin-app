@@ -92,16 +92,7 @@ controller.createPdf = async (req, res, next) => {
   const dates = await Sheets.find({}).select('date');
   const formers = await Sheets.find({}).select('former');
 
-  //Récupérer les données du template choisi
-  // const templateId = req.params;
-  // console.log(templateId)
-
-  //Récupérer les données de l'input avec req.
-
-  //statique
-  //pour dynamique récupérer l'id du sheets lors de la synchro ?
-  // const templateID = await Sheets.findById('5f46357f35187c150585ac37').populate('templateId').exec();
-
+    //Créer le pdf
     const pdf = new PDFDocument({
       size: 'A4',
       layout: 'landscape',
@@ -117,6 +108,7 @@ controller.createPdf = async (req, res, next) => {
     .lineTo(270, 290)
     .stroke()
 
+    //Création des lignes en statique
     row(pdf, 110);
     row(pdf, 130);
     row(pdf, 150);
@@ -127,7 +119,7 @@ controller.createPdf = async (req, res, next) => {
     row(pdf, 250);
     row(pdf, 270);
 
-  //entrer les données dans le tableau
+  //Entrer les données dans le tableau
   learners.forEach(element => {
     textInRowFirst(pdf, '', 120);
     textInRowFirst(pdf, `${element.learner[0]}`, 140);
@@ -158,6 +150,7 @@ controller.createPdf = async (req, res, next) => {
       .moveDown();
   }
 
+  //Entrer le texte dans la première colonne
   function textInRowFirst(pdf, text, height) {
     pdf.y = height;
     pdf.x = 30;
