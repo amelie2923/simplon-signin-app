@@ -15,10 +15,6 @@ router.get('/dashboard', pdfController.dashboard);
 
 router.post('/createpdf', pdfController.createPdf);
 
-router.get('/template', pdfController.template);
-
-router.post('/createtemplate', pdfController.createTemplate);
-
 router.get('/login', usersController.login);
 
 router.get('/register', usersController.register);
@@ -26,6 +22,5 @@ router.get('/register', usersController.register);
 router.post('/signup', usersController.signup)
 
 router.post('/signin', usersController.signin);
-
 
 module.exports = router;

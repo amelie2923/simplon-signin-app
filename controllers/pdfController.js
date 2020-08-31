@@ -140,7 +140,8 @@ controller.createPdf = async (req, res, next) => {
     generateFooter(pdf);
 
     pdf.end();
-    pdf.pipe(fs.createWriteStream('sheets.pdf'));
+    let timestamp = new Date().getTime()
+    pdf.pipe(fs.createWriteStream(`docs/sheets_${timestamp}.pdf`));
 
   //to do : obtenir les données du template
   function generateHeader(pdf) {
@@ -187,42 +188,6 @@ controller.createPdf = async (req, res, next) => {
         { align: "right", width: 500 }
       );
   }
-}
-
-controller.template = async (req, res, next) => {
-  res.render('template', {
-    title: 'Créer un template',
-    path: '/template',
-    page: "template",
-  });
-}
-
-controller.createTemplate = async (req, res, next) => {
-
-  //to do : validation des données du formulaire avec express validator
-
-  try {
-    const template = new Template({
-        name: req.body.name,
-        entitled: req.body.entitled,
-        organism: req.body.organism,
-        logo: req.body.logo
-    });
-
-    await template.save();
-
-    return res.json({
-        success: true,
-        message: 'Le template a bien été créé'
-    });
-
-  } catch (error) {
-    return res.json({
-        success: false,
-        message: 'Une erreur est survenue lors de la création du template'
-    });
-  }
-
 }
 
 //todo : list, edit and remove template controller
