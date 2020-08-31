@@ -97,7 +97,6 @@ controller.createPdf = async (req, res, next) => {
     _id:templateId
   })
   
-  console.log(findTemplate)
 
     //Créer le pdf
     const pdf = new PDFDocument({
