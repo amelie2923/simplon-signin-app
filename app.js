@@ -12,7 +12,8 @@ const configDB = require('./config/database.js');
 mongoose.connect(configDB.url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useCreateIndex: true
 }).then(() => {
   console.log('connection established successfully')
 }).catch(); {

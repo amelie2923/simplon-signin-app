@@ -42,32 +42,35 @@ controller.dataSheets = async (req, res, next) => {
     .then(response => {
       getSheetsData = response.data.feed.entry;
     })
-    .catch(error => {
-      console.log(error);
-    });
-    //Enregistrer les données du Sheets dans des tableaux vides pour pouvoir réutiliser les données
-    getSheetsData.forEach(element => {
-      //Pour push uniquement les éléments sous la première ligne après "Etudiant"
-      if (element.gs$cell.col === '1' && element.gs$cell.inputValue != "Etudiant"){
-        learner.push(element.gs$cell.inputValue)
-      }
-      //Pour push uniquement les éléments sous la première ligne après "Date"
-      if(element.gs$cell.col === '2' && element.gs$cell.inputValue != "Date"){
-        date.push(element.gs$cell.inputValue)
-      }
-      if(element.gs$cell.col === '3' && element.gs$cell.inputValue != "Formateur"){
-        former.push(element.gs$cell.inputValue)
-      }
-    });
-
-    const saveSheetsData = new Sheets({
-      learner: learner,
-      date: date,
-      former: former,
-      templateId: templateId,
-    });
-
-    await saveSheetsData.save();
+    .then(() => {
+      //Enregistrer les données du Sheets dans des tableaux vides pour pouvoir réutiliser les données
+      getSheetsData.forEach(element => {
+        //Pour push uniquement les éléments sous la première ligne après "Etudiant"
+        if (element.gs$cell.col === '1' && element.gs$cell.inputValue != "Etudiant"){
+          learner.push(element.gs$cell.inputValue)
+        }
+        //Pour push uniquement les éléments sous la première ligne après "Date"
+        if(element.gs$cell.col === '2' && element.gs$cell.inputValue != "Date"){
+          date.push(element.gs$cell.inputValue)
+        }
+        if(element.gs$cell.col === '3' && element.gs$cell.inputValue != "Formateur"){
+          former.push(element.gs$cell.inputValue)
+        }
+      });
+    })
+    .then(() => {
+      const saveSheetsData = new Sheets({
+        learner: learner,
+        date: date,
+        former: former,
+        templateId: templateId,
+      });
+      return saveSheetsData
+    })
+    .then((saveSheetsData) => {
+      saveSheetsData.save();
+    })
+    .catch(err => console.log(err))
 
     res.json({
       success: true,
