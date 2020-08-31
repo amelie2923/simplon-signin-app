@@ -91,7 +91,7 @@ controller.createPdf = async (req, res, next) => {
   const learners = await Sheets.find({}).select('learner');
   const dates = await Sheets.find({}).select('date');
   const formers = await Sheets.find({}).select('former');
-
+  
     //Créer le pdf
     const pdf = new PDFDocument({
       size: 'A4',
