@@ -93,7 +93,9 @@ controller.createPdf = async (req, res, next) => {
   const formers = await Sheets.find({}).select('former');
   const templateId  = req.body.templateIdGenerate;
 
-  const findTemplate = await Template.find().where('templateId').equals(templateId).select().exec();
+  const findTemplate = await Template.findOne({
+    _id:templateId
+  })
   
   console.log(findTemplate)
 
