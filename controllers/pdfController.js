@@ -184,42 +184,6 @@ controller.createPdf = async (req, res, next) => {
   }
 }
 
-controller.template = async (req, res, next) => {
-  res.render('template', {
-    title: 'Créer un template',
-    path: '/template',
-    page: "template",
-  });
-}
-
-controller.createTemplate = async (req, res, next) => {
-
-  //to do : validation des données du formulaire avec express validator
-
-  try {
-    const template = new Template({
-        name: req.body.name,
-        entitled: req.body.entitled,
-        organism: req.body.organism,
-        logo: req.body.logo
-    });
-
-    await template.save();
-
-    return res.json({
-        success: true,
-        message: 'Le template a bien été créé'
-    });
-
-  } catch (error) {
-    return res.json({
-        success: false,
-        message: 'Une erreur est survenue lors de la création du template'
-    });
-  }
-
-}
-
 //todo : list, edit and remove template controller
 
 module.exports = controller;
