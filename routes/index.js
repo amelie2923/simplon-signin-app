@@ -13,7 +13,7 @@ router.post('/data', pdfController.dataSheets);
 
 router.get('/dashboard', pdfController.dashboard);
 
-router.get('/createpdf', pdfController.createPdf);
+router.post('/createpdf', pdfController.createPdf);
 
 router.get('/login', usersController.login);
 

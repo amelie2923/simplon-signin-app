@@ -38,7 +38,7 @@ controller.dataSheets = async (req, res, next) => {
   const templateId  = req.body.templateId;
 
   try {
-    axios.get('https://spreadsheets.google.com/feeds/cells/1Z5A_I7_RQKOjAXyDgn9_scbLA7YVTYBAC1G64orWb-E/1/public/full?alt=json')
+    await axios.get('https://spreadsheets.google.com/feeds/cells/1Z5A_I7_RQKOjAXyDgn9_scbLA7YVTYBAC1G64orWb-E/1/public/full?alt=json')
     .then(response => {
       getSheetsData = response.data.feed.entry;
     })
@@ -91,7 +91,18 @@ controller.createPdf = async (req, res, next) => {
   const learners = await Sheets.find({}).select('learner');
   const dates = await Sheets.find({}).select('date');
   const formers = await Sheets.find({}).select('former');
+<<<<<<< HEAD
   
+=======
+  const templateId  = req.body.templateIdGenerate;
+
+  const findTemplate = await Template.findOne({
+    _id:templateId
+  })
+  
+  console.log(findTemplate)
+
+>>>>>>> 008fd159f9f01951c85965b0274d7774bc3b2382
     //Créer le pdf
     const pdf = new PDFDocument({
       size: 'A4',
