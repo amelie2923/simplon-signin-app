@@ -10,10 +10,11 @@
           <label for="template">Choisir un template</label>
             <select class="form-control" name="templateId" id="templatId">
               <% findTemplate.forEach(element => { %>
-                <option value="<%= element.templateId %>"><%= element.name %></option>
+                <option value="<%= element._id %>"><%= element.name %></option>
               <% }); %>
             </select>
         </div>
+        <!-- Comment passer l'id choisi dans label et le récupérer dans le controller qui synchronise le sheets (dataSheets)?-->
         <button type="submit" class="btn btn-primary px-3 font-weight-bold">Enregistrer</button>
     </form>
     <!--Enregistrer le template en base de données-->

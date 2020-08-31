@@ -34,9 +34,8 @@ controller.dataSheets = async (req, res, next) => {
   const date = [];
   const former = [];
   const findTemplate = await Template.find();
-  //get templateId from request of user
-  const templateId = req.params.templateId;
-  console.log(templateId)
+
+  const templateId  = req.body.templateId;
 
   try {
     axios.get('https://spreadsheets.google.com/feeds/cells/1Z5A_I7_RQKOjAXyDgn9_scbLA7YVTYBAC1G64orWb-E/1/public/full?alt=json')
@@ -99,6 +98,7 @@ controller.createPdf = async (req, res, next) => {
   //statique
   //pour dynamique récupérer l'id du sheets lors de la synchro ?
   // const templateID = await Sheets.findById('5f46357f35187c150585ac37').populate('templateId').exec();
+
     const pdf = new PDFDocument({
       size: 'A4',
       layout: 'landscape',
@@ -124,6 +124,7 @@ controller.createPdf = async (req, res, next) => {
     row(pdf, 250);
     row(pdf, 270);
 
+  //entrer les données dans le tableau
   learners.forEach(element => {
     textInRowFirst(pdf, '', 120);
     textInRowFirst(pdf, `${element.learner[0]}`, 140);
@@ -141,17 +142,16 @@ controller.createPdf = async (req, res, next) => {
     pdf.end();
     pdf.pipe(fs.createWriteStream('sheets.pdf'));
 
-  //here get template infos
+  //to do : obtenir les données du template
   function generateHeader(pdf) {
     pdf
       .image("public/images/simplonco.png", 50, 45, { width: 50 })
       .fillColor("#444444")
       .fontSize(20)
-      //here get template dynamic infos
+      //remplacer par les données dynamiques
       .text("SIMPLON", 110, 57)
       .fontSize(10)
-      // .text("123 Main Street", 200, 65, { align: "right" })
-      // .text("New York, NY, 10025", 200, 80, { align: "right" })
+
       .moveDown();
   }
 
@@ -175,7 +175,7 @@ controller.createPdf = async (req, res, next) => {
     return pdf
   }
 
-  //here get signature
+  //signature statique
   function generateFooter(pdf) {
     pdf
       .fontSize(10)

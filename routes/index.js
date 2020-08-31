@@ -25,12 +25,7 @@ router.get('/register', usersController.register);
 
 router.post('/signup', usersController.signup)
 
-/* POST log user */
-
 router.post('/signin', usersController.signin);
 
-/* POST create user */
-
-// router.post('/signup', usersController.signup);
 
 module.exports = router;
