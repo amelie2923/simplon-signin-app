@@ -67,7 +67,7 @@ controller.signin = async (req, res) => {
           message: "Mauvais identifiants"
         });
       } else {
-        res.redirect('/')
+        res.redirect('/dashboard')
       }
     } catch (error) {
       return res.json({
