@@ -135,7 +135,8 @@ controller.createPdf = async (req, res, next) => {
     generateFooter(pdf);
 
     pdf.end();
-    pdf.pipe(fs.createWriteStream('sheets.pdf'));
+    let timestamp = new Date().getTime()
+    pdf.pipe(fs.createWriteStream(`docs/sheets_${timestamp}.pdf`));
 
   //to do : obtenir les données du template
   function generateHeader(pdf) {
