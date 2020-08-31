@@ -1,5 +1,5 @@
 # simplon-signin-app
-Consigne du projet
+Consigne du projet <br>
 A partir d'un google sheet, modéliser une feuille de présence.
 A partir de l'appli pouvoir se connecter. 
 Créer une feuille de présence qui va demander les informations suivantes : 
