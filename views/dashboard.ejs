@@ -19,15 +19,11 @@
     </form>
     <!--Enregistrer le template en base de données-->
     <form class = "text-center" action="/createPdf" method="POST">
-<<<<<<< HEAD
       <select class="form-control" name="templateId" >
         <% findTemplate.forEach(element => { %>
           <option value="<%= element._id %>"><%= element.name %></option>
         <% }); %>
       </select>
-=======
-      <input type="hidden" id="templateIdGenerate" name="templateIdGenerate">
->>>>>>> eadf269498dc8046dc1cdb654c92a18af0e55698
       <label>Créer le pdf</label>
       <button type="submit" class="btn btn-primary px-3 font-weight-bold" onclick="return confirm('Souhaitez-vous générer les données?');">Générer</button>
     </form>

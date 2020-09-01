@@ -89,21 +89,10 @@ controller.createPdf = async (req, res, next) => {
   //Récupérer les données du sheets depuis la base
   
   const template = await Template.findOne({_id : req.body.templateId});
-  const learners = await Sheets.find({}).select('learner');
+  const learners = await Sheets.findOne({templateId : req.body.templateId}).select('learner');
   const dates = await Sheets.find({}).select('date');
   const formers = await Sheets.find({}).select('former');
-<<<<<<< HEAD
-  console.log(template);
-=======
-  const templateId  = req.body.templateIdGenerate;
-
-  const findTemplate = await Template.findOne({
-    _id:templateId
-  })
-  
-  console.log(findTemplate)
-
->>>>>>> eadf269498dc8046dc1cdb654c92a18af0e55698
+  console.log(learners);
     //Créer le pdf
     const pdf = new PDFDocument({
       size: 'A4',
@@ -116,34 +105,28 @@ controller.createPdf = async (req, res, next) => {
     textInRowFirst(pdf);
 
     //ligne verticale milieu tableau
-    pdf.lineCap('butt')
-    .moveTo(270, 130)
-    .lineTo(270, 290)
-    .stroke()
+    
 
     //Création des lignes en statique
     row(pdf, 110);
-    row(pdf, 130);
-    row(pdf, 150);
-    row(pdf, 170);
-    row(pdf, 190);
-    row(pdf, 210);
-    row(pdf, 230);
-    row(pdf, 250);
-    row(pdf, 270);
-
+   
+    nbApprenants = learners.learner.length;
+    console.log(nbApprenants);
   //Entrer les données dans le tableau
-  learners.forEach(element => {
-    textInRowFirst(pdf, '', 120);
-    textInRowFirst(pdf, `${element.learner[0]}`, 140);
-    textInRowFirst(pdf, `${element.learner[1]}`, 160);
-    textInRowFirst(pdf, `${element.learner[2]}`, 180);
-    textInRowFirst(pdf, `${element.learner[3]}`, 200);
-    textInRowFirst(pdf, `${element.learner[4]}`, 220);
-    textInRowFirst(pdf, `${element.learner[5]}`, 240);
-    textInRowFirst(pdf, `${element.learner[6]}`, 260);
-    textInRowFirst(pdf, `${element.learner[7]}`, 280);
+  var x=130;
+  var y=137;
+  textInRowFirst(pdf, '', 120);
+  learners.learner.forEach(element => {
+    row(pdf, x);
+    
+    textInRowFirst(pdf, `${element}`, y);
+    y+=20;
+    x+=20;
   });
+  pdf.lineCap('butt')
+    .moveTo(270, 130)
+    .lineTo(270, x)
+    .stroke()
 
     generateFooter(pdf);
 
