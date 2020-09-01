@@ -22,16 +22,15 @@ let storage = multer.diskStorage({
     }
   });
 
+  let upload = multer({ storage : storage }).single('logo');
+    // upload(req,res,function(err) {
+    //     if(err) {
+    //         return res.end("Error uploading file.");
+    //     }
+    //     res.end("File is uploaded");
+    // });
+
 router.get('/', controller.index);
-router.post('/create',function(req,res){
-let upload = multer({ storage : storage }).single('logo');
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        res.end("File is uploaded");
-    });
-},
-controller.create);
+router.post('/create', upload, controller.create);
 
 module.exports = router;
