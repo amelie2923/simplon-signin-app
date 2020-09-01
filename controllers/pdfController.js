@@ -87,19 +87,21 @@ controller.dataSheets = async (req, res, next) => {
 
 controller.createPdf = async (req, res, next) => {
   //Récupérer les données du sheets depuis la base
-
+  
+  const template = await Template.findOne({_id : req.body.templateId});
   const learners = await Sheets.find({}).select('learner');
   const dates = await Sheets.find({}).select('date');
   const formers = await Sheets.find({}).select('former');
-
+  console.log(template);
     //Créer le pdf
     const pdf = new PDFDocument({
       size: 'A4',
       layout: 'landscape',
-      margin: 50
+      margin: 50,
+  
     });
 
-    generateHeader(pdf);
+    generateHeader(pdf,template);
     textInRowFirst(pdf);
 
     //ligne verticale milieu tableau
@@ -136,17 +138,22 @@ controller.createPdf = async (req, res, next) => {
 
     pdf.end();
     let timestamp = new Date().getTime()
-    pdf.pipe(fs.createWriteStream(`docs/sheets_${timestamp}.pdf`));
+    //depanner
+    var pdfdepan=fs.createWriteStream(`docs/sheets_${timestamp}.pdf`)
+    setTimeout(function(){pdf.pipe(pdfdepan)},3000);
+    
 
   //to do : obtenir les données du template
-  function generateHeader(pdf) {
+  function generateHeader(pdf,template) {
     pdf
-      .image("public/images/simplonco.png", 50, 45, { width: 50 })
+      .image("public/images/"+template.logo, 50, 45, { width: 50 })
       .fillColor("#444444")
       .fontSize(20)
       //remplacer par les données dynamiques
-      .text("SIMPLON", 110, 57)
-      .fontSize(10)
+      .text(template.organism, 110, 57)
+      .fontSize(15)
+      .text(template.entitled, 330, 65)
+      .fontSize(14)
 
       .moveDown();
   }
