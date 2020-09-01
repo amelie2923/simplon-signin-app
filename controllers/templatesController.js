@@ -13,7 +13,7 @@ controller.index = async (req, res, next) => {
 controller.create = async (req, res, next) => {
   const logoFile = req.file;
   //enregistre le chemin de l'image sans le public/images
-  const logo = logoFile.path.split('public/images')[1];
+  const logo = logoFile.path.split('public/images/')[1];
 
 	//to do : validation des données du formulaire avec express validator
 	try {
