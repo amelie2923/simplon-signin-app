@@ -9,7 +9,7 @@ controller.index = async (req, res, next) => {
 		page: "template",
     });
 }
-  
+
 controller.create = async (req, res, next) => {
 	//to do : validation des données du formulaire avec express validator
 	try {
