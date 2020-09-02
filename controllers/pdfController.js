@@ -11,6 +11,9 @@ const Template = require('../models/Template');
 let controller = {}
 
 controller.dashboard = async(req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/')
+  }
   const templateId = await Sheets.find().populate('templateId');
   const name = await Template.find().select('name');
   const findTemplate = await Template.find();
