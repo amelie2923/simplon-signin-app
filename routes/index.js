@@ -22,11 +22,11 @@ router.get('/login', usersController.login);
 // router.get('/register', usersController.register);
 router.get('/', usersController.register);
 
-
 router.post('/signup', usersController.signup)
 
 router.post('/signin', usersController.signin);
 
 router.get('/logout', indexController.logout)
+
 
 module.exports = router;
