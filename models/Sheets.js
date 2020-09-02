@@ -16,6 +16,10 @@ const SheetsSchema = mongoose.Schema({
     former: {
       type: Array
     },
+  signin: {
+      type: String,
+      require: true
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Sheets', SheetsSchema);

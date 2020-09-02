@@ -3,7 +3,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const dotenv = require('dotenv').config()
+const cookieSession = require('cookie-session')
+const dotenv = require('dotenv').config();
 
 /***************Mongodb configuratrion********************/
 var mongoose = require('mongoose');
@@ -25,19 +26,27 @@ var templatesRouter = require('./routes/templates');
 
 var app = express();
 
+app.use(
+  cookieSession({
+    name: 'simplon-signin-app',
+    keys: ['vfK8neVxqr'],
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  })
+)
+
 /**
  * @MiddleWare
- * UTILISATEUR CONNECTÉ
+ * Identifier l'utilisateur connecté (email - userID)
  */
-// app.use('/*', function (req, res, next) {
-//   console.log(req.session)
-//   res.locals.currentUser = {}
-//   if (req.session.user) {
-//     res.locals.currentUser.login = req.session.user.email // email de l'utilisateur connecté (dans le menu) accessible pour toutes les vues
-//     res.locals.currentUser.id = req.session.user._id
-//   }
-//   next()
-// })
+app.use('/*', function (req, res, next) {
+  console.log(req.session)
+  res.locals.currentUser = {}
+  if (req.session.user) {
+    res.locals.currentUser.login = req.session.user.email
+    res.locals.currentUser.id = req.session.user._id
+  }
+  next()
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
