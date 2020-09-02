@@ -79,10 +79,6 @@ controller.signin = async (req, res) => {
 }
 
 controller.signup = async (req, res) => {
-  // if (!validator.isEmail(req.body.email)) {
-  //   return res.redirect('/inscription')
-  // }
-
   User.create({
     email: req.body.email,
     password: req.body.password
