@@ -1,12 +1,9 @@
 let controller = {};
+const path = require('path');
 
 const Template = require('../models/Template');
 
 controller.index = async (req, res, next) => {
-  // if (!req.session.user) {
-  //   console.log(req.session)
-  //   return res.redirect('/')
-  // }
     res.render('template', {
 		title: 'Créer un template',
 		path: '/template',
@@ -18,7 +15,7 @@ controller.create = async (req, res, next) => {
   const logoFile = req.file;
   //enregistre le chemin de l'image sans le public/images
   const logo = logoFile.path.split('public/images/')[1];
-
+  console.log(req.file);
 	//to do : validation des données du formulaire avec express validator
 	try {
 

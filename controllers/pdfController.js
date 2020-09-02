@@ -14,10 +14,7 @@ controller.dashboard = async(req, res, next) => {
   const templateId = await Sheets.find().populate('templateId');
   const name = await Template.find().select('name');
   const findTemplate = await Template.find();
-  // if (!req.session.user) {
-  //   return res.redirect('/')
-  // }
-  // console.log(req.session)
+
   try {
     res.render('dashboard', {
       title: 'Récupérer les données en base et choisir un template',
