@@ -88,10 +88,9 @@ controller.dataSheets = async (req, res, next) => {
 controller.createPdf = async (req, res, next) => {
   //Récupérer les données du sheets depuis la base
   const template = await Template.findOne({_id : req.body.templateId});
-  const learners = await Sheets.findOne({templateId : req.body.templateId}).select('learner');
-  const dates = await Sheets.find({}).select('date');
-  const formers = await Sheets.find({}).select('former');
-  console.log(learners);
+  const sheet = await Sheets.findOne({templateId : req.body.templateId});
+  
+  
     //Créer le pdf
     const pdf = new PDFDocument({
       size: 'A4',
@@ -105,24 +104,38 @@ controller.createPdf = async (req, res, next) => {
     //ligne verticale milieu tableau
 
     //Création des lignes en statique
-    row(pdf, 110);
-    nbApprenants = learners.learner.length;
-    console.log(nbApprenants);
+    row(pdf, 100);
+   
+    
+  //Entrer les données dans le tableau
+  var x=130;
+  var y=137;
+  textInRowFirst(pdf, '', 120);
+sheet.learner.forEach(element => {
+    row(pdf, x);
+    
+    textInRowFirst(pdf, `${element}`, y);
+    y+=30;
+    x+=30;
+  });
+  y=214;
+  
+for(let index=0; index<5;index++){
+    
+    textInFirstRow(pdf, sheet.date[index], y);
+    y+=100;
+    
 
-    //Entrer les données dans le tableau
-    var x=130;
-    var y=137;
-    textInRowFirst(pdf, '', 120);
-    learners.learner.forEach(element => {
-      row(pdf, x);
-      textInRowFirst(pdf, `${element}`, y);
-      y+=20;
-      x+=20;
-    });
+  }
+  for (let index = 200; index < 701; index+=100) {
     pdf.lineCap('butt')
-      .moveTo(270, 130)
-      .lineTo(270, x)
-      .stroke()
+    .moveTo(index, 130)
+    .lineTo(index, x)
+    .stroke()
+    
+  }
+  
+
 
     generateFooter(pdf);
 
@@ -160,10 +173,22 @@ controller.createPdf = async (req, res, next) => {
     });
     return pdf
   }
+  function textInFirstRow(pdf, text, height) {
+    pdf.y = 114;
+    pdf.x = height;
+    pdf.fillColor('black')
+    pdf.text(text, {
+      paragraphGap: 5,
+      indent: 5,
+      align: 'justify',
+      columns: 1,
+    });
+    return pdf
+  }
 
   function row(pdf, height) {
     pdf.lineJoin('miter')
-      .rect(30, height, 500, 20)
+      .rect(30, height, 670, 30)
       .stroke()
     return pdf
   }
