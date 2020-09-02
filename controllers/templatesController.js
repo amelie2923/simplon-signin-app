@@ -11,9 +11,10 @@ controller.index = async (req, res, next) => {
 }
 
 controller.create = async (req, res, next) => {
-  const logoFile = req.file;
-  //enregistre le chemin de l'image sans le public/images
-  const logo = logoFile.path.split('public/images/')[1];
+	const logoFile = req.file;
+	//enregistre le chemin de l'image sans le public/images
+	/* const logo = logoFile.path.split('public/images/')[1];
+	console.log(logoFile); */
 
 	//to do : validation des données du formulaire avec express validator
 	try {
@@ -22,7 +23,7 @@ controller.create = async (req, res, next) => {
 			name: req.body.name,
 			entitled: req.body.entitled,
 			organism: req.body.organism,
-			logo: logo
+			logo: req.file
 		});
 		await template.save();
 

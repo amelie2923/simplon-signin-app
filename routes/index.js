@@ -5,6 +5,9 @@ const usersController = require('../controllers/usersController');
 const { formatters } = require('debug');
 
 /* GET home page. */
+router.get('/home', function(req, res, next) {
+  res.render('home', { title: 'Home' });
+});
 router.get('/index', function(req, res, next) {
   res.render('index', { title: 'Sheets' });
 });
