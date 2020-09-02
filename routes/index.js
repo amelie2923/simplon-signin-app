@@ -5,7 +5,7 @@ const usersController = require('../controllers/usersController');
 const { formatters } = require('debug');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/index', function(req, res, next) {
   res.render('index', { title: 'Sheets' });
 });
 
@@ -17,7 +17,9 @@ router.post('/createpdf', pdfController.createPdf);
 
 router.get('/login', usersController.login);
 
-router.get('/register', usersController.register);
+// router.get('/register', usersController.register);
+router.get('/', usersController.register);
+
 
 router.post('/signup', usersController.signup)
 

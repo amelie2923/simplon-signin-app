@@ -3,12 +3,14 @@
 
 <body>
   <main class="container">
-    <h1><%= title %></h1>
-    <form id="data" action="/data" method="POST">
+    <div class="jumbotron">
+     <h1><%= title %></h1>
+    
+    <!--<form id="data" action="/data" method="POST">
       <div class="form-group">
         <div class="form-group">
           <label for="template">Choisir un template</label>
-          <!--Récupérer l'id grâce au name templateId -->
+          Récupérer l'id grâce au name templateId
             <select class="form-control" name="templateId" id="templatId" onchange="test()">
               <% findTemplate.forEach(element => { %>
                 <option value="<%= element._id %>"><%= element.name %></option>
@@ -16,7 +18,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary px-3 font-weight-bold">Enregistrer</button>
-    </form>
+    </form> -->
     <!--Enregistrer le template en base de données-->
     <form class = "text-center" action="/createPdf" method="POST">
       <select class="form-control" name="templateId" >
@@ -27,9 +29,10 @@
       <label>Créer le pdf</label>
       <button type="submit" class="btn btn-primary px-3 font-weight-bold" onclick="return confirm('Souhaitez-vous générer les données?');">Générer</button>
     </form>
+  </div>
   </main>
 </body>
-<script> 
+<!-- <script> 
   function test(){
     const element =  document.getElementById('templatId');
     var strUser = element.options[element.selectedIndex].value;
@@ -39,5 +42,5 @@
  
   }
 
-</script>
+</script> -->
 <% include ./includes/footer %>

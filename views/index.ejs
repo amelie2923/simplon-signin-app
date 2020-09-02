@@ -5,6 +5,7 @@
 </head>
  <% include ./includes/header %>
   <body>
+    <div class="jumbotron">
       <form id="createTemplate" action="/templates/create" method="POST" enctype = "multipart/form-data">
         <div class="form-group">
           <label for="name">Nom du template</label>
@@ -25,7 +26,7 @@
             <button type="submit" class="btn btn-primary px-3 font-weight-bold" onclick="return confirm('Souhaitez-vous générer le template?');">Créer</button>
         </form>
     </p>
-
+  </div>
 <footer>
     <% include ./includes/footer %>
 </footer>
