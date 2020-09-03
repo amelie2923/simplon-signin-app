@@ -7,9 +7,10 @@ const indexController = require('../controllers/indexController');
 const { formatters } = require('debug');
 
 /* GET home page. */
-router.get('/index', function(req, res, next) {
-  res.render('index', { title: 'Sheets' });
-});
+//faux formulaire add template
+// router.get('/index', function(req, res, next) {
+//   res.render('index', { title: 'Sheets' });
+// });
 
 router.post('/data', pdfController.dataSheets);
 
