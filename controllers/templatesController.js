@@ -4,7 +4,15 @@ const path = require('path');
 const Template = require('../models/Template');
 
 controller.index = async (req, res, next) => {
-    res.render('template', {
+	Template.find({}).then((data) => {
+		res.render('templates/index', {
+			templates: data
+		});
+	})
+}
+
+controller.add = async (req, res, next) => {
+    res.render('templates/index', {
 		title: 'Créer un template',
 		path: '/template',
 		page: "template",
