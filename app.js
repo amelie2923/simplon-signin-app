@@ -36,11 +36,12 @@ app.use(
 
 /**
  * @MiddleWare
- * Identifier l'utilisateur connecté (email - userID)
+ * Identifier l'utilisateur connecté (email - userid)
  */
 app.use('/*', function (req, res, next) {
   // console.log(req.session)
   res.locals.currentUser = {}
+  console.log(res.locals.currentUser)
   if (req.session.user) {
     res.locals.currentUser.login = req.session.user.email
     res.locals.currentUser.id = req.session.user._id

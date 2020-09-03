@@ -62,11 +62,18 @@ controller.signin = async (req, res) => {
         email: email
     })
       if (!user || (user.email !== email && user.password !== password)) {
-        return res.json({
-          result: "error",
+        req.session.msgFlash = {
+          type: "danger",
           message: "Mauvais identifiants"
-        });
+        }
+        res.redirect('/login')
       } else {
+        req.session.user = user;
+        // console.log(req.session);
+        req.session.msgFlash = {
+          type: "success",
+          message: "Bienvenue"
+        }
         res.redirect('/dashboard')
       }
     } catch (error) {
@@ -76,6 +83,7 @@ controller.signin = async (req, res) => {
       });
     }
   }
+  console.log(req.session)
 }
 
 controller.signup = async (req, res) => {
@@ -85,6 +93,27 @@ controller.signup = async (req, res) => {
   }).then(
     res.redirect('/')
   )
+}
+
+controller.show = async (req, res) => {
+  const {
+    id
+  } = req.params
+  try {
+    const user = await User.findById(id)
+    if (!user) return res.status(400).json({
+      result: "error",
+      message: "utilisateur non trouvé"
+    })
+    res.status(200).json({
+      user
+    })
+  } catch (error) {
+    res.status(400).json({
+      result: "error",
+      message: error
+    })
+  }
 }
 
   module.exports = controller;

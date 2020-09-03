@@ -4,9 +4,12 @@ const path = require('path');
 const Template = require('../models/Template');
 
 controller.index = async (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/')
+  }
     res.render('template', {
 		title: 'Créer un template',
-		path: '/template',
+		path: '/add',
 		page: "template",
     });
 }

@@ -7,10 +7,11 @@ const indexController = require('../controllers/indexController');
 const { formatters } = require('debug');
 
 /* GET home page. */
-//faux formulaire add template
-// router.get('/index', function(req, res, next) {
-//   res.render('index', { title: 'Sheets' });
-// });
+router.get('/index', function(req, res, next) {
+  res.render('index', { title: 'Sheets' });
+});
+
+router.get('/logout', indexController.logout);
 
 router.post('/data', pdfController.dataSheets);
 
@@ -27,7 +28,7 @@ router.post('/signup', usersController.signup)
 
 router.post('/signin', usersController.signin);
 
-router.get('/logout', indexController.logout)
+router.get('/:id', usersController.show);
 
 
 module.exports = router;

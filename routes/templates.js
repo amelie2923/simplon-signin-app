@@ -24,7 +24,7 @@ let storage = multer.diskStorage({
 
   let upload = multer({ storage : storage }).single('logo');
 
-router.get('/template', controller.index);
+router.get('/add', controller.index);
 router.post('/create', upload, controller.create);
 
 module.exports = router;
