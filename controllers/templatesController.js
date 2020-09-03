@@ -1,3 +1,5 @@
+const {PDFDocument} = require('pdf-lib');
+const fs = require('fs');
 let controller = {};
 const path = require('path');
 
@@ -9,6 +11,52 @@ const Template = require('../models/Template');
  *
  * @memberof controller
  */
+controller.signPdf = async (req, res, next) =>{
+	//recuperation des parametres dans url 
+	var pdf= req.params.url
+	var row= req.params.row
+	var nbrow= req.params.nbrow
+	
+		// récupération du chemin par le parammetre de lien
+	  const list= await PDFDocument.load(fs.readFileSync('docs/'+pdf));
+	
+	  // Cree un nouveau document
+	  const doc = await PDFDocument.create();
+	
+	  // Add the cover to the new doc
+	  const [listPage] = await doc.copyPages(list, [0]);
+	  doc.addPage(listPage);
+	let img = fs.readFileSync('public/images/simplonco.png');
+	img = await doc.embedPng(img);
+  
+	//Selection de la page a modifier
+	const pages = doc.getPages()
+  	const firstPage = pages[0]
+	var z=438;
+	nbrow=nbrow+1
+	//Enclenché signature en fonction de la ligne
+	for (let index = 1; index < nbrow; index++) {
+		if(row==index){
+		  for(let index=235; index<636;index+=100){
+			firstPage.drawImage(img, {
+			  x: index,
+			  y: z,
+			  width:25,
+			  height:25,
+			});
+		  }
+		  console.log(index)
+		  console.log(z)
+		}
+		z-=30;
+	  }
+	
+	  // Enregistrer le pdf
+	  fs.writeFileSync('docs/'+ pdf, await doc.save());
+  
+		
+  }
+
 controller.index = async (req, res, next) => {
 	if (!req.session.user) {
 		return res.redirect('/')
