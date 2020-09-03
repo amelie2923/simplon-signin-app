@@ -36,7 +36,14 @@
     </div>
 </div>
 
-
+<% if (locals.msgFlash.message) { %>
+    <div class="alert alert-<%= locals.msgFlash.type %> alert-dismissible fade show mt-3" role="alert">
+      <strong><%= locals.msgFlash.message %></strong>.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% }%>
   <footer>
     <% include includes/footer %>
   </footer>

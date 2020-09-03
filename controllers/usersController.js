@@ -8,14 +8,14 @@ let controller = {}
  * @param {object} res Express response object render
  * @memberof controller
  */
-controller.login = async (req, res) => { //GET:/login
+controller.login = async (req, res) => {//GET:/login
   try {
     res.render('login', {
       title: 'Login',
       path: '/login',
     });
   } catch (error) {
-    return res.status(500).send('Error!');
+      return res.status(500).send('Error!');
   }
 }
 
@@ -35,7 +35,7 @@ controller.register = async (req, res) => {
       path: '/register',
     });
   } catch (error) {
-    return res.status(500).send('Error!');
+      return res.status(500).send('Error!');
   }
 }
 
@@ -63,7 +63,7 @@ controller.signin = async (req, res) => {
     try {
       const user = await User.findOne({
         email: email
-      })
+    })
       if (!user || (user.email !== email && user.password !== password)) {
         req.session.msgFlash = {
           type: "danger",
@@ -138,11 +138,11 @@ controller.show = async (req, res) => {
   }
 }
 
-module.exports = controller;
+  module.exports = controller;
 
 
 
-
+  
 // controller.signup = async (req, res) => {
 //   const {
 //     email,

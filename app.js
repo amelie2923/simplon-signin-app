@@ -53,6 +53,18 @@ app.use('/*', function (req, res, next) {
   next()
 })
 
+/**
+ * @MidleWare
+ * Flash Messages
+ */
+app.use('/*', function (req, res, next) {
+  res.locals.msgFlash = {}
+  if (req.session.msgFlash) {
+    res.locals.msgFlash = req.session.msgFlash
+    req.session.msgFlash = null
+  }
+  next()
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
