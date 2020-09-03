@@ -10,7 +10,6 @@ const Template = require('../models/Template');
 
 let controller = {}
 
-
 /**
  * Show the dashbord
  * @param {object} req Express request object
@@ -18,8 +17,11 @@ let controller = {}
  *
  * @memberof controller
  */
+controller.dashboard = async(req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/')
+  }
 
-controller.dashboard = async (req, res, next) => { // GET : /dashboard
   const templateId = await Sheets.find().populate('templateId');
   const name = await Template.find().select('name');
   const findTemplate = await Template.find();

@@ -34,13 +34,13 @@ let storage = multer.diskStorage({
   });
 
   let upload = multer({ storage : storage }).single('logo');
-
 /**
  * @request POST
  * @controller create
  * Action upload le logo(signature)
  * 
  */
+router.get('/add', controller.index);
 router.post('/create', upload, controller.create);
 
 module.exports = router;

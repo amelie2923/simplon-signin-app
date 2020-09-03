@@ -7,10 +7,11 @@ const indexController = require('../controllers/indexController');
 const { formatters } = require('debug');
 
 /* GET home page. */
-//faux formulaire add template
-// router.get('/index', function(req, res, next) {
-//   res.render('index', { title: 'Sheets' });
-// });
+router.get('/index', function(req, res, next) {
+  res.render('index', { title: 'Sheets' });
+});
+
+router.get('/logout', indexController.logout);
 
 /**
  * @request GET
@@ -68,13 +69,12 @@ router.post('/createpdf', pdfController.createPdf);
  */
 router.post('/data', pdfController.dataSheets);
 
-
 /**
  * @request GET
- * @controller logout
- * Déconnexion
+ * @controller show
+ * 
  * 
  */
-router.get('/logout', indexController.logout)
+router.get('/:id', usersController.show);
 
 module.exports = router;

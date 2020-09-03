@@ -2,7 +2,6 @@ let controller = {};
 const path = require('path');
 
 const Template = require('../models/Template');
-
 /**
  * 
  * @param {object} req Express request object
@@ -10,11 +9,13 @@ const Template = require('../models/Template');
  *
  * @memberof controller
  */
-
-controller.index = async (req, res, next) => { //GET:/template
+controller.index = async (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/')
+  }
     res.render('template', {
 		title: 'Créer un template',
-		path: '/template',
+		path: '/add',
 		page: "template",
     });
 }
