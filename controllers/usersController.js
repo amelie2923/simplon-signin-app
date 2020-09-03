@@ -8,14 +8,14 @@ let controller = {}
  * @param {object} res Express response object render
  * @memberof controller
  */
-controller.login = async (req, res) => {//GET:/login
+controller.login = async (req, res) => { //GET:/login
   try {
     res.render('login', {
       title: 'Login',
       path: '/login',
     });
   } catch (error) {
-      return res.status(500).send('Error!');
+    return res.status(500).send('Error!');
   }
 }
 
@@ -35,7 +35,7 @@ controller.register = async (req, res) => {
       path: '/register',
     });
   } catch (error) {
-      return res.status(500).send('Error!');
+    return res.status(500).send('Error!');
   }
 }
 
@@ -63,7 +63,7 @@ controller.signin = async (req, res) => {
     try {
       const user = await User.findOne({
         email: email
-    })
+      })
       if (!user || (user.email !== email && user.password !== password)) {
         req.session.msgFlash = {
           type: "danger",
@@ -86,7 +86,7 @@ controller.signin = async (req, res) => {
       });
     }
   }
-  console.log(req.session)
+  // console.log(req.session)
 }
 
 
@@ -98,14 +98,52 @@ controller.signin = async (req, res) => {
  *
  * @memberof controller
  */
+
 controller.signup = async (req, res) => {
-  User.create({
-    email: req.body.email,
-    password: req.body.password
-  }).then(
-    res.redirect('/login')
-  )
+
+  const email = req.body.email
+  const password = req.body.password
+
+
+  if (email == '' || password == '') {
+
+    req.session.msgflash = {
+      type: "danger",
+      message: "Champs manquante"
+    }
+    console.log("boucle if")
+
+    res.redirect('/')
+    // res.json({
+    //   result: "error",
+    //   type: "danger",
+    //   message: "Champs manquante"
+    // })
+
+  } else {
+    console.log("else")
+    User.create({
+      email: email,
+      password: password
+    }).then(() => {
+      req.session.msgFlash = {
+        type: "success",
+        message: "Inscription réussi"
+      }
+      res.redirect('/')
+    })
+
+
+  }
+
 }
+
+
+
+
+
+
+
 
 
 
@@ -138,11 +176,11 @@ controller.show = async (req, res) => {
   }
 }
 
-  module.exports = controller;
+module.exports = controller;
 
 
 
-  
+
 // controller.signup = async (req, res) => {
 //   const {
 //     email,

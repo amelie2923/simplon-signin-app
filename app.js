@@ -29,7 +29,7 @@ var templatesRouter = require('./routes/templates');
 
 var app = express();
 
-//signiature du cookie
+//
 app.use(
   cookieSession({
     name: 'simplon-signin-app',
@@ -40,12 +40,11 @@ app.use(
 
 /**
  * @MiddleWare
- * Identifier l'utilisateur connecté (email - userid)
+ * Identifier l'utilisateur connecté (email - userID)
  */
 app.use('/*', function (req, res, next) {
   // console.log(req.session)
   res.locals.currentUser = {}
-  console.log(res.locals.currentUser)
   if (req.session.user) {
     res.locals.currentUser.login = req.session.user.email
     res.locals.currentUser.id = req.session.user._id
@@ -53,18 +52,6 @@ app.use('/*', function (req, res, next) {
   next()
 })
 
-/**
- * @MidleWare
- * Flash Messages
- */
-app.use('/*', function (req, res, next) {
-  res.locals.msgFlash = {}
-  if (req.session.msgFlash) {
-    res.locals.msgFlash = req.session.msgFlash
-    req.session.msgFlash = null
-  }
-  next()
-})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
