@@ -2,37 +2,31 @@ const User = require('../models/User');
 
 let controller = {}
 
-// controller.signup = async (req, res) => {
-//   const {
-//     email,
-//     password
-//   } = req.body
-//   try {
-//     const user = await User.create({
-//       email,
-//       password
-//     })
-//     res.status(201).json({
-//       user
-//     })
-//   } catch (error) {
-//     res.status(400).json({
-//       result: "error"
-//     })
-//   }
-// }
-
-controller.login = async (req, res) => {
+/**
+ * 
+ * Formulaire login
+ * @param {object} res Express response object render
+ * @memberof controller
+ */
+controller.login = async (req, res) => { //GET:/login
   try {
     res.render('login', {
       title: 'Login',
       path: '/login',
     });
   } catch (error) {
-      return res.status(500).send('Error!');
+    return res.status(500).send('Error!');
   }
 }
 
+
+/**
+ * 
+ * Formulaire inscription
+ * @param {object} res Express response object render
+ *
+ * @memberof controller
+ */
 controller.register = async (req, res) => {
   try {
 
@@ -41,10 +35,19 @@ controller.register = async (req, res) => {
       path: '/register',
     });
   } catch (error) {
-      return res.status(500).send('Error!');
+    return res.status(500).send('Error!');
   }
 }
 
+
+/**
+ * 
+ * Action connexion
+ *  @param {object} req body
+ * @param {object} res json
+ *
+ * @memberof controller
+ */
 //to do : login et inscription for admin
 controller.signin = async (req, res) => {
   const {
@@ -60,7 +63,7 @@ controller.signin = async (req, res) => {
     try {
       const user = await User.findOne({
         email: email
-    })
+      })
       if (!user || (user.email !== email && user.password !== password)) {
         req.session.msgFlash = {
           type: "danger",
@@ -86,15 +89,34 @@ controller.signin = async (req, res) => {
   console.log(req.session)
 }
 
+
+/**
+ * 
+ * Action connexion
+ *  @param {object} req body
+ * @param {object} res redirect /login
+ *
+ * @memberof controller
+ */
 controller.signup = async (req, res) => {
   User.create({
     email: req.body.email,
     password: req.body.password
   }).then(
-    res.redirect('/')
+    res.redirect('/login')
   )
 }
 
+
+
+/**
+ * 
+ * Indentification du user
+ *  @param {object} req params
+ * @param {object} res status
+ * @param {object} :id
+ * @memberof controller
+ */
 controller.show = async (req, res) => {
   const {
     id
@@ -116,4 +138,27 @@ controller.show = async (req, res) => {
   }
 }
 
-  module.exports = controller;
+module.exports = controller;
+
+
+
+
+// controller.signup = async (req, res) => {
+//   const {
+//     email,
+//     password
+//   } = req.body
+//   try {
+//     const user = await User.create({
+//       email,
+//       password
+//     })
+//     res.status(201).json({
+//       user
+//     })
+//   } catch (error) {
+//     res.status(400).json({
+//       result: "error"
+//     })
+//   }
+// }
