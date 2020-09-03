@@ -2,24 +2,42 @@ let controller = {};
 const path = require('path');
 
 const Template = require('../models/Template');
-
+/**
+ * 
+ * @param {object} req Express request object
+ * @param {object} res Express response object render
+ *
+ * @memberof controller
+ */
 controller.index = async (req, res, next) => {
-	Template.find({}).then((data) => {
+	if (!req.session.user) {
+		res.redirect('/')
+	}
+	Template.find().then((templates) => {
+		console.log(templates);
 		res.render('templates/index', {
-			templates: data
-		});
+			title: 'Créer un template',
+			templates: templates
+		})
+	})
+	.catch((error) => {
+		throw error
 	})
 }
 
 controller.add = async (req, res, next) => {
-    res.render('templates/index', {
-		title: 'Créer un template',
-		path: '/template',
-		page: "template",
-    });
+	res.render('templates/add');
 }
 
-controller.create = async (req, res, next) => {
+/**
+ * 
+ * @param {object} req Express request object file
+ * @param {object} res Express response object 
+ *
+ * @memberof controller
+ */
+
+controller.create = async (req, res, next) => { //POST:/create
   const logoFile = req.file;
   //enregistre le chemin de l'image sans le public/images
   const logo = logoFile.path.split('public/images/')[1];
