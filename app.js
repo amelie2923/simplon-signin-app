@@ -39,7 +39,7 @@ app.use(
  * Identifier l'utilisateur connecté (email - userID)
  */
 app.use('/*', function (req, res, next) {
-  console.log(req.session)
+  // console.log(req.session)
   res.locals.currentUser = {}
   if (req.session.user) {
     res.locals.currentUser.login = req.session.user.email
