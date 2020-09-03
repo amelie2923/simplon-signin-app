@@ -3,9 +3,20 @@ const router = express.Router();
 const multer  =   require('multer');
 const controller = require('../controllers/templatesController')
 const fs = require('fs-extra');
-
 const path = require('path');
 
+
+
+/**
+ * @request GET
+ * @controller index
+ * Formulaire create template
+ * 
+ */
+router.get('/template', controller.index);
+
+
+//upload l'image dans le dossier public/images
 let storage = multer.diskStorage({
     destination: function (req, file, callback) {
       //mkdirs est une fonction de fs-extra qui autorise l'enregistrement du fichier même si le dossier existe déjà
@@ -24,7 +35,12 @@ let storage = multer.diskStorage({
 
   let upload = multer({ storage : storage }).single('logo');
 
-router.get('/template', controller.index);
+/**
+ * @request POST
+ * @controller create
+ * Action upload le logo(signature)
+ * 
+ */
 router.post('/create', upload, controller.create);
 
 module.exports = router;

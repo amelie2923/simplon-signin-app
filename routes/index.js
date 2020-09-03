@@ -12,22 +12,69 @@ const { formatters } = require('debug');
 //   res.render('index', { title: 'Sheets' });
 // });
 
-router.post('/data', pdfController.dataSheets);
-
-router.get('/dashboard', pdfController.dashboard);
-
-router.post('/createpdf', pdfController.createPdf);
-
-router.get('/login', usersController.login);
-
-// router.get('/register', usersController.register);
+/**
+ * @request GET
+ * @controller register
+ * Home page + formulaire login
+ * 
+ */
 router.get('/', usersController.register);
-
+/**
+ * @request POST
+ * @controller signup
+ * Action register
+ * 
+ */
 router.post('/signup', usersController.signup)
 
+/**
+ * @request GET
+ * @controller login
+ * Formulaire login
+ * 
+ */
+router.get('/login', usersController.login);
+
+/**
+ * @request POST
+ * @controller signin
+ * Action du login
+ * 
+ */
 router.post('/signin', usersController.signin);
 
-router.get('/logout', indexController.logout)
+/**
+ * @request GET
+ * @controller dashboard
+ * Apres connexion vue dashboard
+ * 
+ */
+router.get('/dashboard', pdfController.dashboard);
 
+/**
+ * @request POST
+ * @controller createPdf
+ * Action du création du pdf
+ * 
+ */
+router.post('/createpdf', pdfController.createPdf);
+
+
+/**
+ * @request POST
+ * @controller dataSheets
+ * Action du génération du pdf
+ * 
+ */
+router.post('/data', pdfController.dataSheets);
+
+
+/**
+ * @request GET
+ * @controller logout
+ * Déconnexion
+ * 
+ */
+router.get('/logout', indexController.logout)
 
 module.exports = router;

@@ -9,7 +9,7 @@ const dotenv = require('dotenv').config();
 /***************Mongodb configuratrion********************/
 var mongoose = require('mongoose');
 const configDB = require('./config/database.js');
-//configuration ===============================================================
+
 mongoose.connect(configDB.url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -19,13 +19,17 @@ mongoose.connect(configDB.url, {
   console.log('connection established successfully')
 }).catch(); {
 };
+/***********************************/
 
+
+//routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var templatesRouter = require('./routes/templates');
 
 var app = express();
 
+//signiature du cookie
 app.use(
   cookieSession({
     name: 'simplon-signin-app',

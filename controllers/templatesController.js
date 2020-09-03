@@ -3,7 +3,15 @@ const path = require('path');
 
 const Template = require('../models/Template');
 
-controller.index = async (req, res, next) => {
+/**
+ * 
+ * @param {object} req Express request object
+ * @param {object} res Express response object render
+ *
+ * @memberof controller
+ */
+
+controller.index = async (req, res, next) => { //GET:/template
     res.render('template', {
 		title: 'Créer un template',
 		path: '/template',
@@ -11,7 +19,16 @@ controller.index = async (req, res, next) => {
     });
 }
 
-controller.create = async (req, res, next) => {
+
+/**
+ * 
+ * @param {object} req Express request object file
+ * @param {object} res Express response object 
+ *
+ * @memberof controller
+ */
+
+controller.create = async (req, res, next) => { //POST:/create
   const logoFile = req.file;
   //enregistre le chemin de l'image sans le public/images
   const logo = logoFile.path.split('public/images/')[1];
