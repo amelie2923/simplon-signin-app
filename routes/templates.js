@@ -42,5 +42,7 @@ let storage = multer.diskStorage({
  */
 router.get('/add', controller.index);
 router.post('/create', upload, controller.create);
+router.get('/edit/:id',controller.edit);
+router.post('/update/:id',upload,controller.update);
 
 module.exports = router;

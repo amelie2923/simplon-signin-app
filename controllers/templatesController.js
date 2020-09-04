@@ -114,4 +114,92 @@ controller.create = async (req, res, next) => { //POST:/create
 
 }
 
+/**
+ * 
+ * @param {object} req Express request object file
+ * @param {object} res Express response object 
+ *
+ * @memberof controller
+ *Chemin vers formulaire
+ */
+
+controller.edit = async (req, res, next) => {
+  const id = req.params.id;
+  const edit = await Template.findOne({_id : id})
+
+  res.render('edit', {title: 'Edit', edit : edit })
+
+
+}
+
+controller.update = async (req, res, next) => { //POST:/update
+	const logoFile = req.file;
+	const id = req.params.id;
+	
+	if(logoFile != undefined){
+		//enregistre le chemin de l'image sans le public/images
+		const logo = logoFile.path.split('public/images/')[1];
+
+		//to do : validation des données du formulaire avec express validator
+
+		try {
+
+			//update des données avec image
+		     Template.findByIdAndUpdate (
+		   { _id : id } ,
+		    {  name: req.body.name,
+		       entitled: req.body.entitled,
+			   organism: req.body.organism,
+			   logo : logoFile.filename
+			} ,
+		    function ( err , result ) {
+		      if ( err ) {
+		        console.log(err);
+		      } else {
+		        res.send(result ) ;
+		      }
+		    });
+
+		} catch (error) {
+
+				res.json({
+					success: false,
+					message: 'Une erreur est survenue lors de l\'éditon du template'
+				});
+
+		}
+	}else{
+
+		//to do : validation des données du formulaire avec express validator
+
+		try {
+ 
+			//update des données sans image
+		     Template.findByIdAndUpdate (
+		   	{ _id : id } ,
+		    {  name: req.body.name,
+		       entitled: req.body.entitled,
+			   organism: req.body.organism
+			} ,
+		    function ( err , result ) {
+		      if ( err ) {
+		        console.log(err);
+		      } else {
+		        res.send(result ) ;
+		      }
+		    });
+
+		} catch (error) {
+
+				res.json({
+					success: false,
+					message: 'Une erreur est survenue lors de l\'éditon du template'
+				});
+
+		}
+
+	}
+
+}
+
 module.exports = controller;
