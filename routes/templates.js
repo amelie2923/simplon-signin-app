@@ -5,16 +5,13 @@ const controller = require('../controllers/templatesController')
 const fs = require('fs-extra');
 const path = require('path');
 
-
-
 /**
  * @request GET
  * @controller index
  * Formulaire create template
- * 
+ *
  */
 router.get('/template', controller.index);
-
 
 //upload l'image dans le dossier public/images
 let storage = multer.diskStorage({
@@ -38,7 +35,7 @@ let storage = multer.diskStorage({
  * @request POST
  * @controller create
  * Action upload le logo(signature)
- * 
+ *
  */
 router.get('/add', controller.index);
 router.post('/create', upload, controller.create);
