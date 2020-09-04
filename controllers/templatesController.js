@@ -71,7 +71,9 @@ controller.signPdf = async (req, res, next) =>{
 }
 
 controller.add = async (req, res, next) => {
-	res.render('templates/add');
+	res.render('templates/add', {
+		title: "Création template"
+	});
 }
 
 /**
