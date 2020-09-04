@@ -47,7 +47,7 @@ controller.dashboard = async(req, res, next) => {
 /**
  *Génére les donnée du google sheet
  * @param {object} req Express request object templateId
- * @param {object} res Express response object 
+ * @param {object} res Express response object
  * @constant learner
  * @constant date
  * @constant former
@@ -139,11 +139,8 @@ controller.createPdf = async (req, res, next) => { //POST: /createpdf
   generateHeader(pdf, template);
   textInRowFirst(pdf);
 
-  
-
   //Création des lignes en statique
   row(pdf, 100);
-
 
   //Entrer les données dans le tableau
   var x = 130;
@@ -151,35 +148,27 @@ controller.createPdf = async (req, res, next) => { //POST: /createpdf
   textInRowFirst(pdf, '', 120);
   sheet.learner.forEach(element => {
     row(pdf, x);
-
     textInRowFirst(pdf, `${element}`, y);
-    
     y+=30;
     x+=30;
   });
   y=214;
+
   //Affichage des dates
   for(let index=0; index<5;index++){
-    
     textInFirstRow(pdf, sheet.date[index], y);
     y += 100;
-
-
   }
+
   //Création des colone du tableau
   for (let index = 200; index < 701; index+=100) {
     pdf.lineCap('butt')
       .moveTo(index, 130)
       .lineTo(index, x)
       .stroke()
-
   }
-  
-  
 
-
-
-    pdf.end();
+  pdf.end();
     let timestamp = new Date().getTime()
     //definition du nom du fichier
     var pdfname='sheets_'+timestamp+'.pdf'
@@ -189,14 +178,12 @@ controller.createPdf = async (req, res, next) => { //POST: /createpdf
       var raw= index+1;
       //correspond a la route: router.get('/sign/:url/:row/:nbrow', templatesController.signPdf);
       url.push('/sign/'+pdfname+'/'+raw+'/'+sheet.learner.length)
-      
     }
     //affichage des urls dans la console de commande
     console.log(url)
 
     var pdfdepan=fs.createWriteStream(`docs/${pdfname}`)
     setTimeout(function(){pdf.pipe(pdfdepan)},3000);
-  
   //to do : obtenir les données du template
   function generateHeader(pdf, template) {
     pdf

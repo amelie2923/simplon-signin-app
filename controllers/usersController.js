@@ -3,7 +3,7 @@ const User = require('../models/User');
 let controller = {}
 
 /**
- * 
+ *
  * Formulaire login
  * @param {object} res Express response object render
  * @memberof controller
@@ -21,7 +21,7 @@ controller.login = async (req, res) => { //GET:/login
 
 
 /**
- * 
+ *
  * Formulaire inscription
  * @param {object} res Express response object render
  *
@@ -41,7 +41,7 @@ controller.register = async (req, res) => {
 
 
 /**
- * 
+ *
  * Action connexion
  * @param {object} req body
  * @param {object} res json
@@ -54,7 +54,6 @@ controller.signin = async (req, res) => {
   var password=req.body.password
 
   if (email=='' || password=='') {
-  
       req.flash("error", "Champs manquante")
 
   } else {
@@ -64,19 +63,15 @@ controller.signin = async (req, res) => {
       })
       if (!user || (user.email !== email && user.password !== password)) {
         req.flash("error", "Mauvais identifiants")
-
-      
         res.redirect('/login')
       } else {
         req.session.user = user;
         // console.log(req.session);
         req.flash("success", "Bienvenue")
-       
         res.redirect('/dashboard')
       }
     } catch (error) {
       req.flash("error", "Un problème est survenus ")
-     
     }
   }
   // console.log(req.session)
@@ -84,7 +79,7 @@ controller.signin = async (req, res) => {
 
 
 /**
- * 
+ *
  * Action connexion
  * @param {object} req body
  * @param {object} res redirect /login
@@ -97,32 +92,21 @@ controller.signup = (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
-
   if (email == '' || password == '') {
-
-
     //console.log("boucle if")
     console.log(req.session.msgFlash)
     req.flash("error", "Champs manquant")
     res.redirect('/')
-
-
   } else {
     //console.log("else")
     User.create({
       email: email,
       password: password
     }).then(() => {
-
       req.flash("success", "Inscription réussi")
-
-
       res.redirect('/')
     })
-
-
   }
-
 }
 
 
