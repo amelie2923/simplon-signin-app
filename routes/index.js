@@ -63,6 +63,8 @@ router.get('/dashboard', pdfController.dashboard);
  */
 router.post('/createpdf', pdfController.createPdf);
 
+router.get('/createpdf/:id', pdfController.createPdf2);
+
 
 /**
  * @request POST

@@ -11,7 +11,7 @@ const path = require('path');
  * Liste templates
  * 
  */
-router.get("/list", controller.index);
+router.get('/list', controller.index);
 /**
  * @request GET
  * @controller add
@@ -47,5 +47,7 @@ let storage = multer.diskStorage({
 let upload = multer({ storage : storage }).single('logo');
 
 router.post('/create', upload, controller.create);
+
+router.get('/show/:id', controller.show);
 
 module.exports = router;

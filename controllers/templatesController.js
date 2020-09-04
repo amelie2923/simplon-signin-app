@@ -14,7 +14,6 @@ controller.index = async (req, res, next) => {
 		res.redirect('/')
 	}
 	Template.find().then((templates) => {
-		console.log(templates);
 		res.render('templates/index', {
 			title: 'Créer un template',
 			templates: templates
@@ -67,6 +66,17 @@ controller.create = async (req, res, next) => { //POST:/create
 
 	}
 
+}
+
+controller.show = async (req, res, next) => {
+	const templateID = req.params.id;
+
+	Template.findById(templateID)
+		.then((template) => {
+			res.render('templates/show', {
+				template: template
+			})
+		})
 }
 
 module.exports = controller;

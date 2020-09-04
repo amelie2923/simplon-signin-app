@@ -249,6 +249,139 @@ controller.createPdf = async (req, res, next) => { //POST: /createpdf
   }
 }
 
+
+//GET: /createpdf
+controller.createPdf2 = async (req, res, next) => {
+
+  const templateID = req.params.id
+  
+  //Récupérer les données du sheets depuis la base
+  const template = await Template.findById(templateID);
+  const sheet = await Sheets.findOne({ templateId: templateID});
+  //Créer le pdf
+  const pdf = new PDFDocument({
+    size: 'A4',
+    layout: 'landscape',
+    margin: 50,
+  });
+
+  generateHeader(pdf, template);
+  textInRowFirst(pdf);
+
+  //ligne verticale milieu tableau
+
+  //Création des lignes en statique
+  row(pdf, 100);
+
+
+  //Entrer les données dans le tableau
+  var x = 130;
+  var y = 137;
+  textInRowFirst(pdf, '', 120);
+  sheet.learner.forEach(element => {
+    row(pdf, x);
+
+    textInRowFirst(pdf, `${element}`, y);
+    y += 30;
+    x += 30;
+  });
+  y = 214;
+
+  for (let index = 0; index < 5; index++) {
+
+    textInFirstRow(pdf, sheet.date[index], y);
+    y += 100;
+
+
+  }
+  for (let index = 200; index < 701; index += 100) {
+    pdf.lineCap('butt')
+      .moveTo(index, 130)
+      .lineTo(index, x)
+      .stroke()
+
+  }
+
+  generateFooter(pdf);
+
+  pdf.end();
+  let timestamp = new Date().getTime()
+  //depanner
+  var pdfdepan = fs.createWriteStream(`docs/sheets_${timestamp}.pdf`)
+  setTimeout(function () {
+    pdf.pipe(pdfdepan)
+      .then(() => {
+        res.redirect('/home');
+      })
+  }, 3000);
+
+
+  //to do : obtenir les données du template
+  function generateHeader(pdf, template) {
+    pdf
+      .image("public/images/" + template.logo, 50, 45, {
+        width: 50
+      })
+      .fillColor("#444444")
+      .fontSize(20)
+      //remplacer par les données dynamiques
+      .text(template.organism, 110, 57)
+      .fontSize(15)
+      .text(template.entitled, 330, 65)
+      .fontSize(14)
+
+      .moveDown();
+  }
+
+  //Entrer le texte dans la première colonne
+  function textInRowFirst(pdf, text, height) {
+    pdf.y = height;
+    pdf.x = 30;
+    pdf.fillColor('black')
+    pdf.text(text, {
+      paragraphGap: 5,
+      indent: 5,
+      align: 'justify',
+      columns: 1,
+    });
+    return pdf
+  }
+
+  function textInFirstRow(pdf, text, height) {
+    pdf.y = 114;
+    pdf.x = height;
+    pdf.fillColor('black')
+    pdf.text(text, {
+      paragraphGap: 5,
+      indent: 5,
+      align: 'justify',
+      columns: 1,
+    });
+    return pdf
+  }
+
+  function row(pdf, height) {
+    pdf.lineJoin('miter')
+      .rect(30, height, 670, 30)
+      .stroke()
+    return pdf
+  }
+
+  //signature statique
+  function generateFooter(pdf) {
+    pdf
+      .fontSize(10)
+      .text(
+        "Cachet de l'établissement.",
+        150,
+        500, {
+          align: "right",
+          width: 500
+        }
+      );
+  }
+}
+
 //todo : list, edit and remove template controller
 
 module.exports = controller;
