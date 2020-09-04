@@ -29,7 +29,7 @@ controller.login = async (req, res) => { //GET:/login
  */
 controller.register = async (req, res) => {
   try {
-
+    console.log(req.session.msgFlash)
     res.render('register', {
       title: 'Register',
       path: '/register',
@@ -99,7 +99,7 @@ controller.signin = async (req, res) => {
  * @memberof controller
  */
 
-controller.signup = async (req, res) => {
+controller.signup = (req, res) => {
 
   const email = req.body.email
   const password = req.body.password
@@ -107,29 +107,23 @@ controller.signup = async (req, res) => {
 
   if (email == '' || password == '') {
 
-    req.session.msgflash = {
-      type: "danger",
-      message: "Champs manquante"
-    }
-    console.log("boucle if")
 
+    //console.log("boucle if")
+    console.log(req.session.msgFlash)
+    req.flash("error", "Champs manquant")
     res.redirect('/')
-    // res.json({
-    //   result: "error",
-    //   type: "danger",
-    //   message: "Champs manquante"
-    // })
+
 
   } else {
-    console.log("else")
+    //console.log("else")
     User.create({
       email: email,
       password: password
     }).then(() => {
-      req.session.msgFlash = {
-        type: "success",
-        message: "Inscription réussi"
-      }
+
+      req.flash("success", "Inscription réussi")
+
+
       res.redirect('/')
     })
 

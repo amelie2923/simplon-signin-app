@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const flash = require('connect-flash');
 const cookieSession = require('cookie-session')
 const dotenv = require('dotenv').config();
 
@@ -61,6 +62,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
+/**
+ * @MiddleWare
+ * Message flash error success
+ */
+app.use(function(req, res, next) {
+  res.locals.msgFlash = req.flash("success")
+  res.locals.msgFlashError = req.flash("error")
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
