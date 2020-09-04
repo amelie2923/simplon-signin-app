@@ -124,6 +124,11 @@ controller.create = async (req, res, next) => { //POST:/create
  */
 
 controller.edit = async (req, res, next) => {
+
+  if (!req.session.user) {
+    return res.redirect('/')
+  }
+
   const id = req.params.id;
   const edit = await Template.findOne({_id : id})
 
