@@ -11,7 +11,6 @@ const Template = require('../models/Template');
  *
  * @memberof controller
  */
-<<<<<<< HEAD
 controller.index = async (req, res, next) => {
 	if (!req.session.user) {
 		res.redirect('/')
@@ -25,7 +24,8 @@ controller.index = async (req, res, next) => {
 	.catch((error) => {
 		throw error
 	})
-=======
+}
+
 controller.signPdf = async (req, res, next) =>{
 	//recuperation des parametres dans url 
 	var pdf= req.params.url
@@ -71,18 +71,6 @@ controller.signPdf = async (req, res, next) =>{
   
 		
   }
-
-controller.index = async (req, res, next) => {
-	if (!req.session.user) {
-		return res.redirect('/')
-	}
-	res.render('template', {
-		title: 'Créer un template',
-		path: '/add',
-		page: "template",
-	});
->>>>>>> c1aae31c6b7104966a0afd7c8d2777f00e6aba15
-}
 
 controller.add = async (req, res, next) => {
 	res.render('templates/add');
@@ -133,7 +121,6 @@ controller.create = async (req, res, next) => { //POST:/create
 
 }
 
-<<<<<<< HEAD
 controller.show = async (req, res, next) => {
 	const templateID = req.params.id;
 
@@ -143,7 +130,8 @@ controller.show = async (req, res, next) => {
 				template: template
 			})
 		})
-=======
+}
+
 /**
  * 
  * @param {object} req Express request object file
@@ -235,7 +223,6 @@ controller.update = async (req, res, next) => { //POST:/update
 
 	}
 
->>>>>>> c1aae31c6b7104966a0afd7c8d2777f00e6aba15
 }
 
 module.exports = controller;
