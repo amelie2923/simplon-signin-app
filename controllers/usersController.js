@@ -50,40 +50,33 @@ controller.register = async (req, res) => {
  */
 //to do : login et inscription for admin
 controller.signin = async (req, res) => {
-  const {
-    email,
-    password
-  } = req.body
-  if (!email || !password) {
-    return res.json({
-      result: "error",
-      message: "Veuillez remplir ce champ"
-    });
+  var email=req.body.email
+  var password=req.body.password
+
+  if (email=='' || password=='') {
+  
+      req.flash("error", "Champs manquante")
+
   } else {
     try {
       const user = await User.findOne({
         email: email
       })
       if (!user || (user.email !== email && user.password !== password)) {
-        req.session.msgFlash = {
-          type: "danger",
-          message: "Mauvais identifiants"
-        }
+        req.flash("error", "Mauvais identifiants")
+
+      
         res.redirect('/login')
       } else {
         req.session.user = user;
         // console.log(req.session);
-        req.session.msgFlash = {
-          type: "success",
-          message: "Bienvenue"
-        }
+        req.flash("success", "Bienvenue")
+       
         res.redirect('/dashboard')
       }
     } catch (error) {
-      return res.json({
-        result: "error",
-        message: "Mauvais identifiants"
-      });
+      req.flash("error", "Un problème est survenus ")
+     
     }
   }
   // console.log(req.session)
