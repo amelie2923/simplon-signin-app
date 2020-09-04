@@ -98,16 +98,16 @@ controller.dataSheets = async (req, res, next) => { // POST : /data
       })
       .catch(err => console.log(err))
 
-    res.json({
-      success: true,
-      message: 'Les données ont bien été ajoutées à la base'
-    });
+
+      req.flash("success", "Les données ont bien été ajoutées à la base")
+      res.redirect('/dashboard')
+  
 
   } catch (error) {
-    return res.json({
-      success: false,
-      message: 'Une erreur est survenue lors de l\'ajout des données dans la base'
-    });
+    
+    req.flash("error", "Une erreur est survenue lors de l\'ajout des données dans la base")
+    res.redirect('/dashboard')
+   
   }
 };
 

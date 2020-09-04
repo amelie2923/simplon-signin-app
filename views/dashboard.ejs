@@ -3,9 +3,11 @@
 
 <body>
   <main class="container">
-    <% include ./includes/msgFlash %>
+   
     <div class="jumbotron">
      <h1><%= title %></h1>
+ <% include ./includes/msgFlash %>
+
     <!--Enregistrer les données du sheets + le template en base de données-->
     <form class="text-center" id="data" action="/data" method="POST">
       <div class="form-group">
