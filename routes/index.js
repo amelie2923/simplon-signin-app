@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pdfController = require('../controllers/pdfController');
+const templatesController = require('../controllers/templatesController');
 const usersController = require('../controllers/usersController');
 const indexController = require('../controllers/indexController');
 
@@ -54,6 +55,7 @@ router.post('/signin', usersController.signin);
  * 
  */
 router.get('/dashboard', pdfController.dashboard);
+router.get('/sign/:url/:row/:nbrow', templatesController.signPdf);
 
 /**
  * @request POST

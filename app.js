@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const flash = require('connect-flash');
 const cookieSession = require('cookie-session')
 const dotenv = require('dotenv').config();
 
@@ -29,7 +30,7 @@ var templatesRouter = require('./routes/templates');
 
 var app = express();
 
-//signiature du cookie
+//
 app.use(
   cookieSession({
     name: 'simplon-signin-app',
@@ -40,12 +41,15 @@ app.use(
 
 /**
  * @MiddleWare
- * Identifier l'utilisateur connecté (email - userid)
+ * Identifier l'utilisateur connecté (email - userID)
  */
 app.use('/*', function (req, res, next) {
   // console.log(req.session)
   res.locals.currentUser = {}
+<<<<<<< HEAD
   //console.log(res.locals.currentUser)
+=======
+>>>>>>> c1aae31c6b7104966a0afd7c8d2777f00e6aba15
   if (req.session.user) {
     res.locals.currentUser.login = req.session.user.email
     res.locals.currentUser.id = req.session.user._id
@@ -62,6 +66,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
+/**
+ * @MiddleWare
+ * Message flash error success
+ */
+app.use(function(req, res, next) {
+  res.locals.msgFlash = req.flash("success")
+  res.locals.msgFlashError = req.flash("error")
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

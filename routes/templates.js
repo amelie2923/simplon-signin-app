@@ -47,6 +47,8 @@ let storage = multer.diskStorage({
 let upload = multer({ storage : storage }).single('logo');
 
 router.post('/create', upload, controller.create);
+router.get('/edit/:id',controller.edit);
+router.post('/update/:id',upload,controller.update);
 
 router.get('/show/:id', controller.show);
 

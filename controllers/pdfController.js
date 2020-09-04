@@ -8,6 +8,8 @@ const axios = require('axios');
 const Sheets = require('../models/Sheets');
 const Template = require('../models/Template');
 
+
+
 let controller = {}
 
 /**
@@ -137,7 +139,7 @@ controller.createPdf = async (req, res, next) => { //POST: /createpdf
   generateHeader(pdf, template);
   textInRowFirst(pdf);
 
-  //ligne verticale milieu tableau
+  
 
   //Création des lignes en statique
   row(pdf, 100);
@@ -151,38 +153,50 @@ controller.createPdf = async (req, res, next) => { //POST: /createpdf
     row(pdf, x);
 
     textInRowFirst(pdf, `${element}`, y);
-    y += 30;
-    x += 30;
+    
+    y+=30;
+    x+=30;
   });
-  y = 214;
-
-  for (let index = 0; index < 5; index++) {
-
+  y=214;
+  //Affichage des dates
+  for(let index=0; index<5;index++){
+    
     textInFirstRow(pdf, sheet.date[index], y);
     y += 100;
 
 
   }
-  for (let index = 200; index < 701; index += 100) {
+  //Création des colone du tableau
+  for (let index = 200; index < 701; index+=100) {
     pdf.lineCap('butt')
       .moveTo(index, 130)
       .lineTo(index, x)
       .stroke()
 
   }
+  
+  
 
 
 
-  generateFooter(pdf);
+    pdf.end();
+    let timestamp = new Date().getTime()
+    //definition du nom du fichier
+    var pdfname='sheets_'+timestamp+'.pdf'
+    //génération des url
+    var url=[]
+    for (let index = 0; index < sheet.learner.length; index++) {
+      var raw= index+1;
+      //correspond a la route: router.get('/sign/:url/:row/:nbrow', templatesController.signPdf);
+      url.push('/sign/'+pdfname+'/'+raw+'/'+sheet.learner.length)
+      
+    }
+    //affichage des urls dans la console de commande
+    console.log(url)
 
-  pdf.end();
-  let timestamp = new Date().getTime()
-  //depanner
-  var pdfdepan = fs.createWriteStream(`docs/sheets_${timestamp}.pdf`)
-  setTimeout(function () {
-    pdf.pipe(pdfdepan)
-  }, 3000);
-
+    var pdfdepan=fs.createWriteStream(`docs/${pdfname}`)
+    setTimeout(function(){pdf.pipe(pdfdepan)},3000);
+  
   //to do : obtenir les données du template
   function generateHeader(pdf, template) {
     pdf
