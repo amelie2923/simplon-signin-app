@@ -97,10 +97,8 @@ controller.create = async (req, res, next) => { //POST:/create
 		}else{
 
 			await template.save().then(() => {
-			req.session.msgFlash = {
-				type: "success",
-				message: 'Le template a bien été créé'
-			}
+				
+			req.flash("success", "Le template a bien été créé")
 			res.redirect('/templates/add')
 
 		})
