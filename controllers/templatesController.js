@@ -86,7 +86,7 @@ controller.create = async (req, res, next) => { //POST:/create
 			name: req.body.name,
 			entitled: req.body.entitled,
 			organism: req.body.organism,
-			logo: logo
+			logo: logoFile.filename
 		});
 		await template.save().then(() => {
 			req.session.msgFlash = {
