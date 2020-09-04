@@ -35,12 +35,14 @@
 		</div>
 	</main>
 </body>
+
 <script>
-  function getTemplateId(){
-    const element =  document.getElementById('templatId');
-    var strUser = element.options[element.selectedIndex].value;
-    let hidden = document.getElementById('templateIdGenerate');
-    hidden.value = strUser;
-  }
+	function getTemplateId(){
+		const element =  document.getElementById('templatId');
+		var strUser = element.options[element.selectedIndex].value;
+		let hidden = document.getElementById('templateIdGenerate');
+		hidden.value = strUser;
+	}
 </script>
+
 <% include ./includes/footer %>

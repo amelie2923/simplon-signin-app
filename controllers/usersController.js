@@ -29,7 +29,7 @@ controller.login = async (req, res) => { //GET:/login
  */
 controller.register = async (req, res) => {
   try {
-    console.log(req.session.msgFlash)
+    //console.log(req.session.msgFlash)
     res.render('register', {
       title: 'Register',
       path: '/register',
@@ -55,6 +55,7 @@ controller.signin = async (req, res) => {
 
   if (email=='' || password=='') {
       req.flash("error", "Champs manquante")
+      res.redirect('/login')
 
   } else {
     try {
@@ -72,6 +73,7 @@ controller.signin = async (req, res) => {
       }
     } catch (error) {
       req.flash("error", "Un problème est survenus ")
+      res.redirect('/login')
     }
   }
   // console.log(req.session)

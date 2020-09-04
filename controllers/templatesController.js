@@ -97,19 +97,26 @@ controller.create = async (req, res, next) => { //POST:/create
 			organism: req.body.organism,
 			logo: logoFile.filename
 		});
-		await template.save().then(() => {
-			req.session.msgFlash = {
-				type: "success",
-				message: 'Le template a bien été créé'
-			}
+
+		if (template.name==''||template.entitled==''||template.organism==''||template.logo=='') {
+			req.flash("error", "Champs manquante")
+			res.redirect('/templates/add')
+
+
+		}else{
+
+			await template.save().then(() => {
+				
+			req.flash("success", "Le template a bien été créé")
 			res.redirect('/templates/add')
 
 		})
+		}
+		
 	} catch (error) {
-		res.json({
-			success: false,
-			message: 'Une erreur est survenue lors de la création du template'
-		});
+		req.flash("error", "Une erreur est survenue lors de la création du template")
+		res.redirect('/templates/add')
+		
 	}
 }
 
