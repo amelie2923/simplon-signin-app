@@ -13,7 +13,7 @@
 					<div class="form-group">
 						<label for="template">Cliquez sur enregistrer après avoir choisi votre template.</label>
 						<!-- Récupérer l'id grâce au name templateId -->
-						<select class="form-control" name="templateId" id="templatId" onchange="getTemplateId()">
+            <select class="form-control" name="templateId" id="templatId" onchange="getTemplateId()">
 						<% findTemplate.forEach(element => { %>
 							<option value="<%= element._id %>"><%= element.name %></option>
 						<% }); %>
@@ -24,7 +24,7 @@
 					</div>
 				</form>
 				<!--Générer-->
-				<form class="text-center my-5" action="/createPdf" method="POST">
+				<form class="text-center my-5" action="/createpdf" method="POST">
 					<div class="form-group">
 						<label>Générer la feuille de présence</label>
 						<input type="hidden" id="templateIdGenerate" name="templateIdGenerate">
