@@ -30,7 +30,7 @@ controller.dashboard = async(req, res, next) => {
 
   try {
     res.render('dashboard', {
-      title: 'Récupérer les données en base et choisir un template',
+      title: 'Choisir un template',
       path: '/dashboard',
       page: 'dashboard',
       name: name,
