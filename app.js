@@ -46,10 +46,6 @@ app.use(
 app.use('/*', function (req, res, next) {
   // console.log(req.session)
   res.locals.currentUser = {}
-<<<<<<< HEAD
-  //console.log(res.locals.currentUser)
-=======
->>>>>>> c1aae31c6b7104966a0afd7c8d2777f00e6aba15
   if (req.session.user) {
     res.locals.currentUser.login = req.session.user.email
     res.locals.currentUser.id = req.session.user._id
