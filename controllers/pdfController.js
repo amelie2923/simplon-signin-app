@@ -122,12 +122,13 @@ controller.dataSheets = async (req, res, next) => { // POST : /data
 controller.createPdf = async (req, res, next) => { //POST: /createpdf
   //Récupérer les données du sheets depuis la base
   const template = await Template.findOne({
-    _id: req.body.templateId
+    _id: req.body.templateIdGenerate
   });
   const sheet = await Sheets.findOne({
-    templateId: req.body.templateId
+    templateId: req.body.templateIdGenerate
   });
 
+  console.log(template)
 
   //Créer le pdf
   const pdf = new PDFDocument({
